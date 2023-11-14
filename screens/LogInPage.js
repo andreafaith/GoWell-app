@@ -1,34 +1,33 @@
 // LogInPage.js
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import user1 from '../assets/user1.png';
 
-const LogInPage = () => {
+const LogInPage = ({navigation}) => {
 
   const goToSignUp = () => {
     navigation.navigate('SignUp');
   };
+
+  const goToLandingPage = () => {
+    navigation.navigate('LandingPage');
+  };
   
   return (
     <View style={styles.container}>
-      {/* First Layer: Frame */}
       <View style={styles.frame}>
-        {/* Second Layer: Accent */}
         <View style={styles.accent} />
       </View>
-      {/* Third Layer: Fill Out */}
       <View style={styles.fillOut}>
 
        <Image source={user1} style={styles.user} />
-
-        <Text style={styles.subTitles}>Email Address</Text>
-        <TextInput style={styles.input} placeholder="aaroninlayo@gmail.com" />
+        <Text style={styles.subTitles}>Username or Email</Text>
+        <TextInput style={styles.input} placeholder="Username or Email" />
 
         <Text style={styles.subTitles}>Password</Text>
-        <TextInput style={styles.input} placeholder="**********" />
+        <TextInput style={styles.input} placeholder="Enter your Password" />
 
-        <TouchableOpacity style={styles.logInButton}>
+        <TouchableOpacity style={styles.logInButton} onPress={goToLandingPage}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
 
@@ -39,14 +38,15 @@ const LogInPage = () => {
         </View>
 
         <View style={styles.socialMediaIcons}>
-          <Image source={require('../assets/Icons.png')} style={styles.icon} />
+          <Image source={require('../assets/SocMedIcons.png')} style={styles.icon} />
         </View>
-        <TouchableWithoutFeedback onPress={goToSignUp}>
+
+        <TouchableOpacity onPress={goToSignUp}>
           <View style={styles.loginLinkContainer}>
             <Text style={styles.SignupLinkText}>Don't have an account? </Text>
             <Text style={styles.SignupLink}>Sign up</Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     </View>
   );

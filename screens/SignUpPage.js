@@ -1,50 +1,53 @@
 // SignUpPage.js
 import React, {useState} from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, 
+  StyleSheet, Modal, TouchableHighlight } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import user1 from '../assets/user1.png';
 
-const SignUpPage = () => {
+const SignUpPage = ({navigation}) => {
+  
   const [isChecked, setChecked] = useState(false);
+  const [showModal, setShowModal] = useState(false); 
 
-  const goToLogin = () => {
-    navigation.navigate('Login');
+  const goToLogIn = () => {
+    navigation.navigate('LogIn');
+  };
+
+  const handleSignUp = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    goToLogIn(); 
   };
 
   return (
     <View style={styles.container}>
-     
-      {/* First Layer: Frame */}
       <View style={styles.frame}>
-        {/* Second Layer: Accent */}
         <View style={styles.accent} />
       </View>
-     
-      {/* Third Layer: Fill Out */}
+
       <View style={styles.fillOut}>
         
         <Image source={user1} style={styles.user} />
-
         <Text style={styles.title}>Create an Account</Text>
         
         <Text style={styles.label}>Full Name</Text>
-        <TextInput style={styles.input} placeholder="AARON JAN INLAYO" />
+        <TextInput style={styles.input} placeholder="ex. Aaron Jan Inlayo"/>
 
         <Text style={styles.label}>Email Address</Text>
-        <TextInput style={styles.input} placeholder="aaronjaninlayo@gmail.com" />
+        <TextInput style={styles.input} placeholder="ex. aaronjaninlayo@gmail.com"/>
 
         <Text style={styles.label}>Username</Text>
-        <TextInput style={styles.input} placeholder="aaronjaninlayo123" />
+        <TextInput style={styles.input} placeholder="ex. aaronjaninlayo123"/>
 
         <Text style={styles.label}>Password</Text>
-        <TextInput style={styles.input} placeholder="**********" secureTextEntry />
+        <TextInput style={styles.input} placeholder="Type your Password" secureTextEntry/>
 
         <Text style={styles.label}>Confirm Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm your password"
-          secureTextEntry
-        />
+        <TextInput style={styles.input} placeholder="Confirm your password" secureTextEntry/>
 
         <CheckBox
           title="By signing up you accept the Terms of service and Privacy Policy"
@@ -54,16 +57,32 @@ const SignUpPage = () => {
           textStyle={styles.checkboxText}
         />
 
-        <TouchableOpacity style={styles.signUpButton}>
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
-        <TouchableWithoutFeedback onPress={goToLogin}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showModal}
+          onRequestClose={() => setShowModal(false)}>
+
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>You're all set!</Text>
+              <TouchableHighlight underlayColor="#fff" onPress={closeModal}>
+                <Text style={styles.modalLinkText}>Proceed to <Text style={styles.logInLink}>Log In</Text></Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableOpacity onPress={goToLogIn}>
           <View style={styles.loginLinkContainer}>
             <Text style={styles.loginLinkText}>Already have an account? </Text>
             <Text style={styles.loginLink}>Log in</Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
 
       </View>
     </View>
@@ -82,7 +101,7 @@ const styles = StyleSheet.create({
   user: {
     width: 70,
     height: 70,
-    left: '36.5%'
+    left: '36.5%',
   },
   accent: {
     flex: 1,
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute', 
     top: '15%', 
-    bottom: '10%',
+    bottom: '9%',
     left: '7%',
     right: '7%',
     backgroundColor: '#F5F5F5', 
@@ -107,8 +126,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
-    paddingHorizontal: 40,
-    paddingTop: 30,
+    paddingHorizontal: 30,
+    paddingTop: 5,
   },
   title: {
     fontSize: 24,
@@ -136,7 +155,7 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     backgroundColor: '#0B3954',
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 40,
     marginTop: 20,
     alignItems: 'center',
@@ -151,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 0,
     marginLeft: 0,
-    paddingHorizontal: 0,
+    paddingHorizontal: 10,
   },
   checkboxText: {
     fontSize: 12,
@@ -172,6 +191,35 @@ const styles = StyleSheet.create({
     color: '#0B3954',
     fontWeight: 'bold',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0B3954',
+    marginBottom: 20,
+  },
+  modalLinkText: {
+    fontSize: 16,
+    color: '#0B3954',
+    fontWeight: 'bold',
+  },
+  logInLink: {
+    fontSize: 16,
+    color: '#0B3954',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline', 
+  },
 });
 
-export default SignUpPage;
+export default SignUpPage;  
